@@ -38,13 +38,14 @@ def run_quickstart():
     file_name = os.path.join(
         os.path.dirname(__file__),
         'resources',
-        'test.flac')
+        'audio.flac')
 
     # Loads the audio into memory
     with io.open(file_name, 'rb') as audio_file:
         content = audio_file.read()
         audio = types.RecognitionAudio(content=content)
 
+    # flac doesn't require passing encoding and rate: https://cloud.google.com/speech-to-text/docs/encoding
     config = types.RecognitionConfig(
         #encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
         #sample_rate_hertz=16000,
