@@ -3,7 +3,7 @@
 export GOOGLE_APPLICATION_CREDENTIALS="/home/eyal/readpi/readpi-3d4e9ace8bbe.json"
 
 echo "Activating virtualenv"
-#source env/bin/activate
+source env/bin/activate
 
 cd resources
 
