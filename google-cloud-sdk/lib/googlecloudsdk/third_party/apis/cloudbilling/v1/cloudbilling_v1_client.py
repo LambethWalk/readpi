@@ -97,7 +97,7 @@ This method can only be used to create
 [billing subaccounts](https://cloud.google.com/billing/docs/concepts)
 for GCP resellers.
 When creating a subaccount, the current authenticated user must have the
-`billing.accounts.update` IAM permission on the master account, which is
+`billing.accounts.update` IAM permission on the main account, which is
 typically given to billing account
 [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
 
