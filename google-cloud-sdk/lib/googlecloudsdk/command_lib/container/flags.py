@@ -172,7 +172,7 @@ def AddClusterVersionFlag(parser, suppressed=False, help=None):  # pylint: disab
   """Adds a --cluster-version flag to the given parser."""
   if help is None:
     help = """\
-The Kubernetes version to use for the master and nodes. Defaults to
+The Kubernetes version to use for the main and nodes. Defaults to
 server-specified.
 
 The default Kubernetes version is available using the following command.
@@ -663,51 +663,51 @@ def AddTagsFlag(parser, help_text):
       help=help_text)
 
 
-def AddMasterAuthorizedNetworksFlags(parser, enable_group_for_update=None,
+def AddMainAuthorizedNetworksFlags(parser, enable_group_for_update=None,
                                      hidden=False):
-  """Adds Master Authorized Networks related flags to parser.
+  """Adds Main Authorized Networks related flags to parser.
 
-  Master Authorized Networks related flags are:
-  --enable-master-authorized-networks --master-authorized-networks.
+  Main Authorized Networks related flags are:
+  --enable-main-authorized-networks --main-authorized-networks.
 
   Args:
     parser: A given parser.
     enable_group_for_update: An optional group of mutually exclusive flag
-        options to which an --enable-master-authorized-networks flag is added
+        options to which an --enable-main-authorized-networks flag is added
         in an update command. If given, the flag will default to None instead
         of False.
     hidden: If true, suppress help text for added options.
   """
   if enable_group_for_update is None:
     # Flags are being added to the same group.
-    master_flag_group = parser.add_argument_group('Master Authorized Networks')
-    enable_flag_group = master_flag_group
+    main_flag_group = parser.add_argument_group('Main Authorized Networks')
+    enable_flag_group = main_flag_group
     enable_default = False
   else:
     # Flags are being added to different groups, so the new one should have no
     # help text (has only one arg).
-    master_flag_group = parser.add_argument_group('')
+    main_flag_group = parser.add_argument_group('')
     enable_flag_group = enable_group_for_update
     enable_default = None
 
   enable_flag_group.add_argument(
-      '--enable-master-authorized-networks',
+      '--enable-main-authorized-networks',
       default=enable_default,
       help='Allow only Authorized Networks (specified by the '
-      '`--master-authorized-networks` flag) and Google Compute Engine Public '
-      'IPs to connect to Kubernetes master through HTTPS. By default public  '
-      'internet (0.0.0.0/0) is allowed to connect to Kubernetes master through '
+      '`--main-authorized-networks` flag) and Google Compute Engine Public '
+      'IPs to connect to Kubernetes main through HTTPS. By default public  '
+      'internet (0.0.0.0/0) is allowed to connect to Kubernetes main through '
       'HTTPS.',
       hidden=hidden,
       action='store_true')
-  master_flag_group.add_argument(
-      '--master-authorized-networks',
+  main_flag_group.add_argument(
+      '--main-authorized-networks',
       type=arg_parsers.ArgList(min_length=1, max_length=10),
       metavar='NETWORK',
       help='The list of external networks (up to 10) that are allowed to '
-      'connect to Kubernetes master through HTTPS. Specified in CIDR notation '
+      'connect to Kubernetes main through HTTPS. Specified in CIDR notation '
       '(e.g. 1.2.3.4/30). Can not be specified unless '
-      '`--enable-master-authorized-networks` is also specified.',
+      '`--enable-main-authorized-networks` is also specified.',
       hidden=hidden)
 
 
@@ -720,12 +720,12 @@ def AddNetworkPolicyFlags(parser, hidden=False):
       hidden=hidden,
       help='Enable network policy enforcement for this cluster. If you are '
       'enabling network policy on an existing cluster the network policy '
-      'addon must first be enabled on the master by using '
+      'addon must first be enabled on the main by using '
       '--update-addons=NetworkPolicy=ENABLED flag.')
 
 
 def AddPrivateClusterFlags(parser, hidden=False):
-  """Adds --private-cluster flag to parser and --master-ipv4-cidr to parser."""
+  """Adds --private-cluster flag to parser and --main-ipv4-cidr to parser."""
   group = parser.add_argument_group('Private Clusters')
   group.add_argument(
       '--private-cluster',
@@ -736,8 +736,8 @@ def AddPrivateClusterFlags(parser, hidden=False):
       required=True,
       hidden=hidden)
   group.add_argument(
-      '--master-ipv4-cidr',
-      help=('IPv4 CIDR range to use for the master network.  This should be a '
+      '--main-ipv4-cidr',
+      help=('IPv4 CIDR range to use for the main network.  This should be a '
             '/28 and should be used in conjunction with the --private-cluster '
             'flag.'),
       default=None,
@@ -1405,7 +1405,7 @@ def AddIssueClientCertificateFlag(parser):
 Issue a TLS client certificate with admin permissions.
 
 When enabled, the certificate and private key pair will be present in
-MasterAuth field of the Cluster object.
+MainAuth field of the Cluster object.
 """
   parser.add_argument(
       '--issue-client-certificate',
